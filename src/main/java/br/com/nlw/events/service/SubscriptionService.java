@@ -1,8 +1,11 @@
 package br.com.nlw.events.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nlw.events.dto.SubscriptionRankingItem;
 import br.com.nlw.events.dto.SubscriptionResponse;
 import br.com.nlw.events.exception.EventNotFoundException;
 import br.com.nlw.events.exception.SubscriptionConflictException;
@@ -38,9 +41,12 @@ public class SubscriptionService {
             userRec = userRepo.save(user);
         }
 
-        User indicator = userRepo.findById(userId).orElse(null);
-        if (indicator == null) {
-            throw new UserIndicatorNotFoundException("Usuário " + userId + " indicador não existe");
+        User indicator = null;
+        if (userId != null) {
+            indicator = userRepo.findById(userId).orElse(null);
+            if (indicator == null) {
+                throw new UserIndicatorNotFoundException("Usuário " + userId + " indicador não existe");
+            }
         }
 
         Subscription subs = new Subscription();
@@ -64,4 +70,11 @@ public class SubscriptionService {
                 formatedDesignation);
     }
 
+    public List<SubscriptionRankingItem> getCompleteRanking(String prettyName) {
+        Event evt = evtRepo.findByPrettyName(prettyName);
+        if (evt == null) {
+            throw new EventNotFoundException("Ranking do evento " + prettyName + " não existe.");
+        }
+        return subRepo.generateRanking(evt.getEventId());
+    }
 }
