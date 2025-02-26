@@ -25,7 +25,7 @@ public class EventController {
     @Autowired
     private EventService service;
 
-    @PostMapping
+    @PostMapping("create")
     @Operation(summary = "Criar um novo evento", description = "Adicionar um novo evento ao banco de dados")
     public Event addNewEvent(@RequestBody Event newEvent) {
        return service.addNewEvent(newEvent); 

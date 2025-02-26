@@ -38,7 +38,7 @@ public class SubscriptionService {
             throw new EventNotFoundException("Evento " + eventName + " não existe.");
         }
 
-        User userRec = userRepo.findByEmail(user.getEmail());
+        User userRec = userRepo.findByEmail(user.getEmail()).orElse(null);
         if (userRec == null) {
             userRec = userRepo.save(user);
         }

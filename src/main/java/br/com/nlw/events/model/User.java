@@ -18,9 +18,9 @@ public class User {
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(name = "user_name", length = 255, nullable = false)
+    @Column(name = "user_name", length = 255)
     private String name;
 
-    @Column(name = "user_email", length = 255, nullable = false, unique = true)
+    @Column(name = "user_email", length = 255, unique = true)
     private String email;
 }

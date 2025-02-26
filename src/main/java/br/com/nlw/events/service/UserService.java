@@ -21,4 +21,12 @@ public class UserService {
     public User findUserById(Integer idUser) {
         return userRepo.findById(idUser).orElse(null);
     }
+
+    public User findUserByEmail(String email) {
+        return userRepo.findByEmail(email).orElse(null);
+    }
+
+    public User addNewUser(User user) {
+        return userRepo.save(user);
+    }
 }
